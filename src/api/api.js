@@ -25,3 +25,12 @@ export async function getProfile() {
   })
   return response.json()
 }
+
+export async function createOrder(items) {
+  const response = await fetch(`${BASE_URL}/orders`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...authHeader() },
+    body: JSON.stringify({ items }),
+  })
+  return response.json()
+}

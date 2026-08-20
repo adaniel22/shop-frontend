@@ -2,7 +2,7 @@ import './App.css'
 import { useEffect, useState } from 'react'
 import { useAuth } from './hooks/useAuth.js'
 import Login from './components/Login.jsx'
-import { getProducts, getProfile } from './api/api.js'
+import { createOrder, getProducts, getProfile } from './api/api.js'
 
 function App() {
   const { email, login, logout } = useAuth()
@@ -18,6 +18,14 @@ function App() {
     setProfile(data)
   }
 
+  const handleOrder = async (productId) => {
+    const response = await createOrder([{ productId, quantity: 1 }])
+    if (response.id) {
+      alert(`Rendelés leadva! Végösszeg: ${response.totalAmount} Ft`)
+    } else {
+      alert('Hiba történt a rendelés során.')
+    }
+  }
   return (
     <div>
       <h1>Webshop</h1>
@@ -41,6 +49,7 @@ function App() {
         {products.map((product) => (
           <li key={product.id}>
             {product.name} - {product.price} Ft
+            <button onClick={() => handleOrder(product.id)}>Rendelés</button>
           </li>
         ))}
       </ul>
