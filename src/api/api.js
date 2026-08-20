@@ -34,3 +34,10 @@ export async function createOrder(items) {
   })
   return response.json()
 }
+
+export async function getOrders() {
+  const response = await fetch(`${BASE_URL}/orders`, {
+    headers: authHeader(),
+  })
+  return response.json()
+}
