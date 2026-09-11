@@ -5,8 +5,18 @@ function authHeader() {
   return token ? { Authorization: `Bearer ${token}` } : {}
 }
 
-export async function getProducts() {
-  const response = await fetch(`${BASE_URL}/products`)
+export async function getProducts(filters = {}) {
+  const params = new URLSearchParams()
+  if (filters.search) params.set('search', filters.search)
+  if (filters.animal) params.set('animal', filters.animal)
+  if (filters.category) params.set('category', filters.category)
+  if (filters.minPrice) params.set('minPrice', filters.minPrice)
+  if (filters.maxPrice) params.set('maxPrice', filters.maxPrice)
+
+  const query = params.toString()
+  const url = query ? `${BASE_URL}/products?${query}` : `${BASE_URL}/products`
+
+  const response = await fetch(url)
   return response.json()
 }
 
