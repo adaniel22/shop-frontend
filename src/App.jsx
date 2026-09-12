@@ -5,6 +5,7 @@ import { getProducts } from './api/api'
 import Login from './components/Login.jsx'
 import UserPanel from './components/UserPanel.jsx'
 import ProductList from './components/ProductList.jsx'
+import Cart from './components/Cart.jsx'
 
 function App() {
   const { email, login, logout } = useAuth()
@@ -33,6 +34,8 @@ function App() {
       ) : (
         <Login onLogin={login} />
       )}
+
+      {email && <Cart />}
 
       <div>
         <input
